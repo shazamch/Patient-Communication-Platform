@@ -9,8 +9,13 @@ class PeerService {
                 "stun:global.stun.twilio.com:3478",
               ],
             },
+            {
+              urls: "turn:your-turn-server-url",
+              username: "your-username",
+              credential: "your-credential",
+            },
           ],
-        });
+        });        
       }
     }
   
