@@ -79,12 +79,13 @@ const Lobby = () => {
   }, []);
 
   useEffect(() => {
-    peer.peer.addEventListener("track", async (ev) => {
-      const remoteStream = ev.streams;
-      console.log("GOT TRACKS!!");
-      setRemoteStream(remoteStream[0]);
+    const remoteMediaStream = new MediaStream();
+    peer.peer.addEventListener("track", (ev) => {
+      console.log("Received remote track");
+      remoteMediaStream.addTrack(ev.track);
+      setRemoteStream(remoteMediaStream);
     });
-  }, []);
+  }, []);  
 
   useEffect(() => {
     socket.on("user:joined", handleUserJoined);
