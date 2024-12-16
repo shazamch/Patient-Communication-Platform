@@ -2,7 +2,7 @@ const cors = require('cors');
 
 const allowedOrigins = [
   'http://localhost:5173',
-  "patient-communication-platform.vercel.app"
+  "https://patient-communication-platform.vercel.app"
 ];
 
 const corsOptions = {
