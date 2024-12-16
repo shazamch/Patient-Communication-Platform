@@ -108,6 +108,7 @@ const Lobby = () => {
     handleNegoNeedIncomming,
     handleNegoNeedFinal,
   ]);
+  console.log("myStream", myStream)
   console.log("remoteStream", remoteStream)
   return (
     <div>
