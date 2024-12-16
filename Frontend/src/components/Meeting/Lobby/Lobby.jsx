@@ -108,35 +108,39 @@ const Lobby = () => {
     handleNegoNeedIncomming,
     handleNegoNeedFinal,
   ]);
-
+  console.log("remoteStream", remoteStream)
   return (
     <div>
       <h1>Room Page</h1>
       <h4>{remoteSocketId ? "Connected" : "No one in room"}</h4>
       {myStream && <button onClick={sendStreams}>Send Stream</button>}
       {remoteSocketId && <button onClick={handleCallUser}>CALL</button>}
+      <div className="flex">
       {myStream && (
-        <>
+        <div>
           <h1>My Stream</h1>
           <ReactPlayer
             playing
-            height="100px"
-            width="200px"
+            // muted
+            height="200px"
+            width="300px"
             url={myStream}
           />
-        </>
+        </div>
       )}
       {remoteStream && (
-        <>
+        <div>
           <h1>Remote Stream</h1>
           <ReactPlayer
             playing
-            height="100px"
-            width="200px"
+            // muted
+            height="200px"
+            width="300px"
             url={remoteStream}
           />
-        </>
+        </div>
       )}
+      </div>
     </div>
   );
 };
