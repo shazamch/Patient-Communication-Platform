@@ -1,5 +1,4 @@
 import React, { useEffect, useCallback, useState } from "react";
-import ReactPlayer from "react-player";
 import peer from "../../../redux/middleware/peer";
 import { useSocket } from "../../../context/SocketProvider";
 
@@ -85,7 +84,7 @@ const Lobby = () => {
       remoteMediaStream.addTrack(ev.track);
       setRemoteStream(remoteMediaStream);
     });
-  }, []);  
+  }, []);
 
   useEffect(() => {
     socket.on("user:joined", handleUserJoined);
@@ -109,8 +108,10 @@ const Lobby = () => {
     handleNegoNeedIncomming,
     handleNegoNeedFinal,
   ]);
-  console.log("myStream", myStream)
-  console.log("remoteStream", remoteStream)
+
+  console.log("myStream", myStream);
+  console.log("remoteStream", remoteStream);
+
   return (
     <div>
       <h1>Room Page</h1>
@@ -118,30 +119,39 @@ const Lobby = () => {
       {myStream && <button onClick={sendStreams}>Send Stream</button>}
       {remoteSocketId && <button onClick={handleCallUser}>CALL</button>}
       <div className="flex">
-      {myStream && (
-        <div>
-          <h1>My Stream</h1>
-          <ReactPlayer
-            playing
-            // muted
-            height="200px"
-            width="300px"
-            url={myStream}
-          />
-        </div>
-      )}
-      {remoteStream && (
-        <div>
-          <h1>Remote Stream</h1>
-          <ReactPlayer
-            playing
-            // muted
-            height="200px"
-            width="300px"
-            url={remoteStream}
-          />
-        </div>
-      )}
+        {myStream && (
+          <div>
+            <h1>My Stream</h1>
+            <video
+              playsInline
+              muted
+              autoPlay
+              height="200px"
+              width="300px"
+              ref={(video) => {
+                if (video) {
+                  video.srcObject = myStream;
+                }
+              }}
+            />
+          </div>
+        )}
+        {remoteStream && (
+          <div>
+            <h1>Remote Stream</h1>
+            <video
+              playsInline
+              autoPlay
+              height="200px"
+              width="300px"
+              ref={(video) => {
+                if (video) {
+                  video.srcObject = remoteStream;
+                }
+              }}
+            />
+          </div>
+        )}
       </div>
     </div>
   );
