@@ -13,7 +13,7 @@ const io = new Server(server, {
         origin: [
           "http://localhost:5173",
           "https://patient-communication-platform.vercel.app/",
-          "https://patient-communication-platform-shazamchs-projects.vercel.app/"],
+          ],
         methods: ['GET', 'POST'],
         credentials: true,
     },
