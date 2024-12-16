@@ -120,7 +120,6 @@ const Lobby = () => {
           <h1>My Stream</h1>
           <ReactPlayer
             playing
-            muted
             height="100px"
             width="200px"
             url={myStream}
@@ -132,7 +131,6 @@ const Lobby = () => {
           <h1>Remote Stream</h1>
           <ReactPlayer
             playing
-            muted
             height="100px"
             width="200px"
             url={remoteStream}
