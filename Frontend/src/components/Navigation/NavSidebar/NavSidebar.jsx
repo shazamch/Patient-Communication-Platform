@@ -1,7 +1,7 @@
 // components/NavSidebar/NavSidebar.jsx
 import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import MainLogo from '../../../assets/MainLogo.SVG';
+import MainLogo from '../../../assets/MainLogo.svg';
 import NavSidebarItems from './NavSidebarItems';
 import { ExpandableIcon } from '../../../assets/sidebarIcons/SidebarIcons';
 
