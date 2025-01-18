@@ -10,19 +10,16 @@ const app = express();
 const server = http.createServer(app);
 
 const io = new Server(server, {
-    cors: {
-        origin: [
-          "http://localhost:5173",
-          "https://patient-communication-platform.vercel.app/",
-          "https://patient-communication-platform.vercel.app",
-          ],
-          optionsSuccessStatus: 200,
-          methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-          credentials: true,
-          exposedHeaders: 'Authorization',
-          allowedHeaders: '*',
-    },
-})
+  cors: {
+    origin: [
+      "http://localhost:5173",
+      "https://patient-communication-platform.vercel.app",
+      "https://patient-communication-platform-git-main-shazamchs-projects.vercel.app/"
+    ],
+    methods: ['GET', 'POST'],
+    credentials: true,
+  },
+});
 
 app.use(express.json());
 app.use(cors);
