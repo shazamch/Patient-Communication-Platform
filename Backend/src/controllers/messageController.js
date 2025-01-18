@@ -8,20 +8,20 @@ exports.setSocketIO = (io) => {
 // Controller: Send Message
 exports.sendMessage = async (req, res) => {
   try {
-    const { accessToken, refreshToken } = req.user;
-    const { receiverid, senderid, message: messageContent } = req.body.message;
+    const { accessToken } = req.user;
+    const { receiverid, senderId, message } = req.body.messageData;
 
     // Call the service to send the message
-    const response = await messageService.sendMessage(messageContent, receiverid, senderid);
+    const response = await messageService.sendMessage(message, receiverid, senderId);
 
     if (!response.success) {
-      return res.sendResponse(400, false, response.message); // Return the message received from the service
+      return res.sendResponse(400, false, response.message);
     }
 
-    res.sendResponse(200, true, 'Message sent successfully', response.message, { accessToken, refreshToken });
+    res.sendResponse(200, true, 'Message sent successfully', response.message, accessToken);
   } catch (error) {
-    console.error("Error in sendMessage controller:", error); // Log the full error
-    res.sendResponse(500, false, error.message); // Return the actual error message to the client
+    console.error("Error in sendMessage controller:", error);
+    res.sendResponse(500, false, error.message);
   }
 };
 
@@ -30,7 +30,7 @@ exports.sendMessage = async (req, res) => {
 // Receive Message
 exports.receiveMessage = async (req, res) => {
   try {
-    const { accessToken, refreshToken } = req.user;  // Get tokens from req.user
+    const { accessToken } = req.user;  // Get tokens from req.user
     const receiverid = req.params.id;  // The receiver's ID from the URL parameter
     const senderid = req.userid;       // The sender's ID from the authenticated user data
 
@@ -41,7 +41,7 @@ exports.receiveMessage = async (req, res) => {
       return res.sendResponse(400, false, 'No messages found');
     }
 
-    res.sendResponse(200, true, 'Messages fetched successfully', response.messages, { accessToken, refreshToken });
+    res.sendResponse(200, true, 'Messages fetched successfully', response.messages, accessToken);
   } catch (error) {
     res.sendResponse(500, false, error.message);
   }

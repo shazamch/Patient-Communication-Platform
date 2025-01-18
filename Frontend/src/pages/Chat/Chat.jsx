@@ -4,7 +4,8 @@ import Sidebar from '../../components/Chat/ChatSidebar/ChatSidebar';
 import Conversation from '../../components/Chat/Conversation/Conversation';
 import logo from '../../assets/MainLogo.svg';
 import { useDispatch, useSelector } from 'react-redux';
-import chatMiddleware from '../../redux/middleware/chatMiddleware'; // Import middleware
+import chatMiddleware from '../../redux/middleware/chatMiddleware';
+import userMiddleware from '../../redux/middleware/userMiddleware';
 
 function Chat({ children, onLogout, isDarkMode, toggleDarkMode }) {
   const Data = localStorage.getItem("user");
@@ -18,7 +19,7 @@ function Chat({ children, onLogout, isDarkMode, toggleDarkMode }) {
   useEffect(() => {
     const fetchAllUsers = async () => {
       try {
-        const response = await dispatch(chatMiddleware.GetAllUsers());
+        const response = await dispatch(userMiddleware.GetAllUsers());
         if (response.success) {
           setAllusers(response.data);
         } else {
@@ -37,12 +38,12 @@ function Chat({ children, onLogout, isDarkMode, toggleDarkMode }) {
     try {
       const response = await dispatch(chatMiddleware.FindConversation(userId1,userId2));
       if (response.success) {
-        setconversationToRender(response.data); // Assuming the response has 'conversation' field
+        setconversationToRender(response.data);
       } else {
-        console.error(`Fetch conversation failed for user ${userId}`);
+        console.error(`Fetch conversation failed for user ${userId1}`);
       }
     } catch (error) {
-      console.error(`Fetch conversation failed for user ${userId}:`, error);
+      console.error(`Fetch conversation failed for user ${userId1}:`, error);
     }
   };
 
@@ -69,7 +70,7 @@ function Chat({ children, onLogout, isDarkMode, toggleDarkMode }) {
   return (
     <div className="flex bg-white shadow-lg rounded-lg">
       <Sidebar onSelectChat={onSelectChat} isDarkMode={isDarkMode} allusers={allusers} LoggedInUserDate={LoggedInUserDate} />
-      <div className="flex-grow w-full h-[calc(100vh-115px)]">
+      <div className="flex-grow w-full h-[calc(100vh-15px)]">
         {conversationToRender !== "Splash" ? (
           <>
             <div className="flex">
@@ -78,7 +79,7 @@ function Chat({ children, onLogout, isDarkMode, toggleDarkMode }) {
             </div>
           </>
         ) : (
-          <div className={`flex flex-col justify-center items-center h-[calc(100vh-115px)] rounded-r-lg ${isDarkMode ? 'bg-gray-800 text-white' : 'bg-white text-black'}`}>
+          <div className={`flex flex-col justify-center items-center h-[calc(100vh-15px)] rounded-r-lg ${isDarkMode ? 'bg-gray-800 text-white' : 'bg-white text-black'}`}>
             <img src={logo} alt="Main Logo" className={`h-24 w-24 mb-6 ${isDarkMode ? 'filter invert' : ''}`} />
             <h1 className="text-5xl font-bold text-gray-800 mb-4 drop-shadow-lg">
               Patient Communication Platform

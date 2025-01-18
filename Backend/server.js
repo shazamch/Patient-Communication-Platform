@@ -92,6 +92,6 @@ io.on('connection', (socket) => {
 
 // Server startup
 server.listen(port, () => {
-    dbConnect(); // Connect to the database when the server starts
+    dbConnect();
     console.log(`Server Running at Port ${port}`);
 });

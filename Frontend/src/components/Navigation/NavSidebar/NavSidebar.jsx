@@ -1,26 +1,40 @@
-// components/NavSidebar/NavSidebar.jsx
 import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import MainLogo from '../../../assets/MainLogo.svg';
 import NavSidebarItems from './NavSidebarItems';
 import { ExpandableIcon } from '../../../assets/sidebarIcons/SidebarIcons';
+import { logout } from "../../../redux/actions/userAction";
+import UserProfileModel from '../userProfileModel/UserProfleModel'; // Import the UserProfileModel component
 
 function NavSidebar({ isDarkMode }) {
     const [isSubMenuExpanded, setIsSubMenuExpanded] = useState(false);
+    const [isModelOpen, setisModelOpen] = useState(false); // State for controlling the profile modal visibility
+    const dispatch = useDispatch();
+    const { user } = useSelector((state) => state.user); // Get user data from Redux
 
     const toggleCustomersSection = () => {
         setIsSubMenuExpanded(prev => !prev);
     };
 
+    const handleLogout = () => {
+        dispatch(logout());
+        setisModelOpen(false); // Close modal after logout
+    };
+
+    const handleMyProfile = () => {
+        setisModelOpen(false); // Close modal and navigate to the profile page
+        // You can use the navigate function to go to the profile page
+        // navigate('/myprofile');
+    };
+
     return (
-        <div className="flex flex-col justify-between bg-gray-700 gap-2 h-screen transition-all duration-500 ease-in-out max-w-24 flex-shrink-0">
+        <div className="flex flex-col justify-between bg-myblue gap-2 h-screen transition-all duration-500 ease-in-out max-w-14 flex-shrink-0">
             {/* Logo */}
             <div className="flex flex-col items-center justify-center">
                 <img src={MainLogo} alt="YANA Logo" height="10px" className="h-10 invert" />
                 <span className="text-xs mt-2 text-center font-bold text-white">Patient Communication Platform</span>
             </div>
-
-
 
             {/* Below menu */}
             <nav className="px-5 flex-grow overflow-y-auto">
@@ -75,10 +89,14 @@ function NavSidebar({ isDarkMode }) {
             </nav>
 
             {/* Footer */}
-            {/* <div className="text-center p-5">
-                <span className="block text-xs text-gray-400 font-semibold">Yana Medical Dashboard</span>
-                <span className="block text-xs text-gray-400">© All Rights Reserved</span>
-            </div> */}
+            <div className="flex flex-col items-center gap-2 cursor-pointer" onClick={() => setisModelOpen(true)}>
+                    <UserProfileModel
+                        isModelOpen={isModelOpen}
+                        toggleModel={setisModelOpen}
+                        onLogout={handleLogout}
+                        onProfile={handleMyProfile}
+                    />
+                </div>
         </div>
     );
 }

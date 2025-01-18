@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import messageMiddleware from '../../../redux/middleware/messageMiddleware';
 import { useSocket } from "../../../context/SocketProvider";
 
-function Footer({ isDarkMode, receiverData, LoggedUser }) {
+function Footer({ isDarkMode, receiverData, LoggedUser, conversationId }) {
   const [message, setMessage] = useState('');
   const dispatch = useDispatch(); // Use dispatch to send actions
   const socket = useSocket();
@@ -15,8 +15,9 @@ function Footer({ isDarkMode, receiverData, LoggedUser }) {
 
       const messageData = {
         message: message,
-        sender: LoggedUser.name,
-        senderid: LoggedUser._id,
+        conversationId,
+        senderName: LoggedUser.name,
+        senderId: LoggedUser._id,
         receiverid: ReceiverId,
         timestamp: new Date().toISOString(),
       };
@@ -25,7 +26,9 @@ function Footer({ isDarkMode, receiverData, LoggedUser }) {
       const response = await dispatch(messageMiddleware.sendMessage(ReceiverId, messageData));
 
       if (response.success) {
-        console.log('Message sent successfully.');
+        if (LoggedUser._id === messageData.senderId){
+          console.log('Message sent successfully.');
+        }
       } else {
         console.error('Failed to send message:', response.message);
       }

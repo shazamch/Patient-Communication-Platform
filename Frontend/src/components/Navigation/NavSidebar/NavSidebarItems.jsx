@@ -1,11 +1,11 @@
 import React from 'react';
-import { DashBoardIcon,  MealsIcon, MenusIcon,CustomersIcon, ChatIcon, PersIcon, ReviewsIcon, UmsIcon, VendorsIcon } from '../../../assets/sidebarIcons/SidebarIcons';
-import Dashboard from '../../../pages/Dashboard/Dashboard';
+import { DashBoardIcon, ChatIcon, ChannelsIcon, MeetingsIcon } from '../../../assets/sidebarIcons/SidebarIcons';
 
 const allSidebarItems = [
   { to: "/dashboard", icon: <DashBoardIcon/>, label: "Dashboard", permission: "Dashboard" },
   { to: "/chat", icon: <ChatIcon/>, label: "Chat", permission: "Chat" },
-  { to: "/meetings", icon: <ChatIcon/>, label: "Meetings", permission: "Meetings" },
+  // { to: "/meetings", icon: <ChannelsIcon/>, label: "Channels", permission: "Channels" },
+  { to: "/meetings", icon: <MeetingsIcon/>, label: "Meetings", permission: "Meetings" },
 //   {
 //     to: "/customers",
 //     icon: <CustomersIcon />,

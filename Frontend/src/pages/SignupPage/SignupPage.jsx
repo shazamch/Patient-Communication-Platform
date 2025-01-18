@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux'; // Import useDispatch
-import { signup } from '../../redux/actions/userAction'; // Import signup action
+import { useDispatch } from 'react-redux';
+import { signup } from '../../redux/actions/userAction';
 import logo from '../../assets/MainLogo.svg';
 import PasswordInput from '../../elements/passwordInput/PasswordInput';
 
@@ -182,7 +182,7 @@ const SignUp = ({ isDarkMode }) => {
           <button
             type="submit"
             className={`py-2 rounded-md font-semibold hover:shadow-lg transition-all ${
-              isDarkMode ? 'text-black bg-white' : 'bg-gray-800 text-white'
+              isDarkMode ? 'text-black bg-mylightblue' : 'bg-myblue text-white'
             }`}
           >
             Sign Up
@@ -198,7 +198,7 @@ const SignUp = ({ isDarkMode }) => {
           Already have an account?{' '}
           <button
             onClick={() => navigate('/login')}
-            className="text-gray-800 hover:underline border-none bg-transparent focus:outline-none"
+            className="text-myblue hover:underline border-none bg-transparent focus:outline-none"
           >
             Log in
           </button>

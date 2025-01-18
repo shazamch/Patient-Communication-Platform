@@ -58,11 +58,12 @@ const userSchema = mongoose.Schema({
         default: {}
       },
     phone: {
-        type: String,
-        maxlength: 45,
-        unique: true,
-        default: '',
-        },
+      type: String,
+      maxlength: 45,
+      unique: true,
+      sparse: true,
+      default: null,
+    },
     gender: {
         type: String,
         required: false,
@@ -82,6 +83,10 @@ const userSchema = mongoose.Schema({
         type: String,
         default: "000000",
         required: false,
+    },
+    refreshToken: {
+      type: String,
+      default: null,
     },
     status: {
         type: String,

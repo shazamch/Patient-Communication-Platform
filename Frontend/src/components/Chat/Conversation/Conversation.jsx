@@ -64,21 +64,25 @@ function Conversation({ isDarkMode, conversationToRender, setconversationToRende
         // Listen for incoming chat messages
         socket.on('chat message', (messageData) => {
             if (messageData.ReceiverId.toString() === LoggedUser._id.toString()) {
+                console.log("Message Recevied")
                 const sound = new Audio(notification);
                 sound.play();
             }            
             // Reformat messageData
             const formattdmessageData = {
-                id: messageData.message.id, // Assuming there's an id property
-                message: messageData.message.message, // Retain the message content
-                sender: messageData.message.sender,
-                userId: messageData.message.senderid,
+                id: messageData.message.id,
+                message: messageData.message.message,
+                senderName: messageData.message.senderName,
+                senderId: messageData.message.senderId,
                 time: formatDate(messageData.message.timestamp)
-                // Add any other necessary fields from messageData
             };
-
-            // Update messages state with the new message
-            setconversationToRender((prevMessages) => [...prevMessages, formattdmessageData]);
+            if (messageData.message.conversationId === conversationToRender.conversationId){
+                console.log("Message Added to CONVO")
+                setconversationToRender((prevConversation) => ({
+                    ...prevConversation,
+                    messages: [...prevConversation.messages, formattdmessageData],
+                }));
+            }
         });
 
         // Cleanup on component unmount
@@ -86,7 +90,7 @@ function Conversation({ isDarkMode, conversationToRender, setconversationToRende
             socket.off('chat message');
         };
     }, []);
-
+    
     return (
         <div className={`chat-container rounded-r-lg h-[calc(100vh-115px)] w-[calc(100vw-355px)] ${isDarkMode ? 'bg-gray-800 text-white shadow-lg' : 'bg-white text-black'} p-4`}>
             <div className='bg-blue-50 rounded-lg p-1 mb-2 flex items-center justify-between'>
@@ -110,9 +114,9 @@ function Conversation({ isDarkMode, conversationToRender, setconversationToRende
             {showSplash && <ComingSoonSplash />}
             {showProfileDetails && <ProfileDetails userData={selectedUser} onClose={() => setShowProfileDetails(false)} isDarkMode={isDarkMode} />}
             <div className="chat-messages flex flex-col h-[484px] overflow-y-auto pr-2 scrollbar-hide">
-                {conversationToRender.map((message, index) => {
+                {conversationToRender.messages.map((message, index) => {
                     const uniqueKey = message.id || `${message.sender}-${message.timestamp}-${index}`;
-                    const messageUserData = message.sender === otherUserData.name
+                    const messageUserData = message.senderName === otherUserData.name
                         ? otherUserData
                         : LoggedUser;
 
@@ -130,7 +134,7 @@ function Conversation({ isDarkMode, conversationToRender, setconversationToRende
                         <div 
                             key={uniqueKey} 
                             className={`message mb-4 p-2 rounded-md max-w-[40%] ${
-                                message.userId === LoggedUser._id 
+                                message.senderId === LoggedUser._id 
                                     ? 'bg-blue-600 text-white self-end rounded-br-none' 
                                     : 'bg-gray-700 text-white self-start rounded-bl-none'
                             }`}
@@ -158,7 +162,7 @@ function Conversation({ isDarkMode, conversationToRender, setconversationToRende
                 })}
                 <div ref={messagesEndRef} />
             </div>
-            <Footer isDarkMode receiverData={otherUserData} LoggedUser={LoggedUser} /> {/* Footer added here */}
+            <Footer isDarkMode receiverData={otherUserData} LoggedUser={LoggedUser} conversationId={conversationToRender.conversationId} /> {/* Footer added here */}
         </div>
     );
 }

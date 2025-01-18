@@ -3,12 +3,12 @@ const conversationServices = require('../services/conversationServices');
 // Get all users
 const getAllUsers = async (req, res) => {
   try {
-    const { accessToken, refreshToken } = req.user; // Get tokens from req.user
+    const { accessToken } = req.user; // Get tokens from req.user
     const response = await conversationServices.getAllUsers(req.userid); // Call service to get users
     if (!response.success) {
       return res.sendResponse(400, false, 'No users found'); // Return 400 if no users found
     }
-    res.sendResponse(200, true, 'Users fetched successfully', response.users, { accessToken, refreshToken });
+    res.sendResponse(200, true, 'Users fetched successfully', response.users, accessToken);
   } catch (error) {
     res.sendResponse(500, false, error.message); // Handle errors
   }
@@ -17,12 +17,12 @@ const getAllUsers = async (req, res) => {
 // Get chat stack (conversations where user is a participant)
 const chatstack = async (req, res) => {
   try {
-    const { accessToken, refreshToken } = req.user;
+    const { accessToken } = req.user;
     const response = await conversationServices.chatstack(req.params.userId);
     if (!response.success) {
       return res.sendResponse(400, false, 'No conversations found');
     }
-    res.sendResponse(200, true, 'Chat stack fetched successfully', response.currentChatStack, { accessToken, refreshToken });
+    res.sendResponse(200, true, 'Chat stack fetched successfully', response.currentChatStack, accessToken);
   } catch (error) {
     res.sendResponse(500, false, error.message); // Handle errors
   }
@@ -31,7 +31,7 @@ const chatstack = async (req, res) => {
 // Find a conversation between two users
 const findConversation = async (req, res) => {
   try {
-    const { accessToken, refreshToken } = req.user;
+    const { accessToken } = req.user;
     const userId1 = req.body.userId1
     const userId2 = req.body.userId2
 
@@ -40,7 +40,7 @@ const findConversation = async (req, res) => {
       return res.sendResponse(404, false, 'Conversation not found');
     }
 
-    res.sendResponse(200, true, 'Conversation fetched successfully', response.conversation, { accessToken, refreshToken });
+    res.sendResponse(200, true, 'Conversation fetched successfully', response.data, accessToken);
   } catch (error) {
     res.sendResponse(500, false, error.message);
   }

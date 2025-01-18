@@ -129,7 +129,7 @@ function LoginPage({ isDarkMode }) {
             type="submit"
             disabled={loading}  // Disable button when loading
             className={`py-2 rounded-md font-semibold hover:shadow-lg transition-all ${
-              isDarkMode ? 'text-black bg-white' : 'bg-gray-800 text-white'
+              isDarkMode ? 'text-black bg-mylightblue' : 'bg-myblue text-white'
             }`}
           >
             {loading ? 'Logging in...' : 'Login'}
@@ -144,7 +144,7 @@ function LoginPage({ isDarkMode }) {
           Don't have an account?{' '}
           <button
             onClick={() => navigate('/signup')}
-            className="text-gray-800 hover:underline border-none bg-transparent focus:outline-none"
+            className="text-myblue hover:underline border-none bg-transparent focus:outline-none"
           >
             Signup
           </button>

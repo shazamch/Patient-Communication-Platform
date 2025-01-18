@@ -8,7 +8,7 @@ const messageMiddleware = {
     return async (dispatch) => {
       try {
         // Send message via REST API (to save in the database)
-        const response = await apiPost("/protected/message/send", { message: messageData });
+        const response = await apiPost("/protected/message/send", { messageData });
         if (response.success) {
           dispatch(showSuccessAlert('Message sent successfully'));
           return { success: true, message: response };

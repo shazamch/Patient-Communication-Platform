@@ -1,33 +1,25 @@
 // services/userService.js
 const User = require('../models/userModel');
 
-// Create User
-const createUser = async (userData) => {
-  const user = new User(userData);
-  const savedUser = await user.save();
-  if (!savedUser) {
-    throw new Error('User creation failed');
-  }
-  return savedUser;
-};
-
 // Get All Users
 const getAllUsers = async () => {
-  const users = await User.find();
-  if (!users) {
+  const users = await User.find({}, '_id username name email address phone profilephoto role status createdAt updatedAt');
+  if (!users || users.length === 0) {
     throw new Error('No users found');
   }
   return users;
 };
 
+
 // Get User by ID
 const getUserById = async (id) => {
-  const user = await User.findById(id);
+  const user = await User.findById(id, '_id username name email address phone profilephoto role status createdAt updatedAt');
   if (!user) {
     throw new Error(`User with ID ${id} not found`);
   }
   return user;
 };
+
 
 // Update User
 const updateUser = async (id, updateData) => {
@@ -47,8 +39,7 @@ const deleteUser = async (id) => {
   return deletedUser;
 };
 
-module.exports = {
-  createUser,
+module.exports = {  
   getAllUsers,
   getUserById,
   updateUser,

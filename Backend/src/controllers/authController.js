@@ -7,9 +7,9 @@ const signUp = async (req, res) => {
       if (!user) {
         return res.sendResponse(500, false, 'User creation failed');
       }
-      const { tokens, ...userData } = user;
+      const { accessToken, ...userData } = user;
 
-        res.sendResponse(201, true, 'User created successfully', userData, { accessToken: tokens.accessToken, refreshToken: tokens.refreshToken, });
+        res.sendResponse(201, true, 'User created successfully', userData, accessToken);
   } catch (error) {
     res.sendResponse(500, false, error.message || 'User creation failed');
   }
@@ -19,8 +19,8 @@ const signUp = async (req, res) => {
 const login = async (req, res) => {
   try {
     const { email, password } = req.body;
-    const { accessToken, refreshToken, userData } = await authService.loginUser(email, password);
-    res.sendResponse(200, true, 'Login successful', userData, { accessToken, refreshToken });
+    const { accessToken, userData } = await authService.loginUser(email, password);
+    res.sendResponse(200, true, 'Login successful', userData, accessToken);
   } catch (error) {
     res.sendResponse(400, false, error.message || 'Login failed');
   }

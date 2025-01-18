@@ -12,10 +12,9 @@ const userReducer = createSlice({
   reducers: {
     loginAsync: (state, action) => {
       state.isAuthenticated = true;
-      state.token = action.payload.tokens.accessToken;
+      state.token = action.payload.accessToken;
       state.user = action.payload.data;
-      localStorage.setItem('accessToken', action.payload.tokens.accessToken);
-      localStorage.setItem('refreshToken', action.payload.tokens.refreshToken);
+      localStorage.setItem('accessToken', action.payload.accessToken);
       localStorage.setItem('user', JSON.stringify(action.payload.data));
     },
 
@@ -33,10 +32,9 @@ const userReducer = createSlice({
 
     signupAsync: (state, action) => {
       state.isAuthenticated = true;
-      state.token = action.payload.tokens.accessToken;
+      state.token = action.payload.accessToken;
       state.user = action.payload.data;
-      localStorage.setItem('accessToken', action.payload.tokens.accessToken);
-      localStorage.setItem('refreshToken', action.payload.tokens.refreshToken);
+      localStorage.setItem('accessToken', action.payload.accessToken);
       localStorage.setItem('user', JSON.stringify(action.payload.data));
     },
   },

@@ -46,7 +46,7 @@ exports.sendMessage = async (messageContent, receiverid, senderid) => {
     return { success: true, message: newMessages };
   } catch (error) {
     console.error("Error in sendMessage service:", error);
-    return { success: false, message: "An error occurred while sending the message." }; // Provide a simple error message
+    return { success: false, message: "An error occurred while sending the message." };
   }
 };
 

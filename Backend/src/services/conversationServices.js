@@ -1,4 +1,5 @@
 const User = require("../models/userModel");
+const userService = require('../services/userService');
 const Conversation = require("../models/conversationModel");
 
 // Get All Users (excluding the current user)
@@ -18,9 +19,7 @@ exports.getAllUsers = async (userId) => {
 // Get Chat Stack (list of conversations with user details)
 exports.chatstack = async (userId) => {
   try {
-    const currentChatStack = await Conversation.find({
-      participants: userId
-    })
+    const currentChatStack = await Conversation.find({ participants: userId })
       .sort({ updatedAt: -1 })
       .populate("messages");
 
@@ -36,43 +35,49 @@ exports.chatstack = async (userId) => {
       otherParticipants.forEach((id) => participantsIDs.add(id.toString()));
     });
 
-    const participantArray = Array.from(participantsIDs);
-    const users = await User.find({ _id: { $in: participantArray } }).select("-password -email");
+    const participantsDetails = await Promise.all(
+      Array.from(participantsIDs).map(async (id) => {
+        try {
+          const user = await userService.getUserById(id);
+          const lastMessage = currentChatStack
+            .find((conversation) => conversation.participants.includes(id))
+            ?.messages.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))[0];
 
-    const participantsDetails = participantArray
-      .map((id) => {
-        const user = users.find((u) => u._id.toString() === id);
-        const lastMessage = currentChatStack
-          .find((conversation) => conversation.participants.includes(id))
-          ?.messages.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))[0];
-
-        return {
-          ...user.toObject(),
-          lastMessage: lastMessage ? lastMessage.createdAt : null,
-        };
+          return {
+            ...user.toObject(),
+            lastMessage: lastMessage ? lastMessage.createdAt : null, // Keep original format
+          };
+        } catch (err) {
+          console.error(`Error fetching user with ID ${id}:`, err.message);
+          return null;
+        }
       })
-      .filter(Boolean);
+    );
 
-    return { success: true, currentChatStack: participantsDetails };
+    return { 
+      success: true, 
+      currentChatStack: participantsDetails.filter(Boolean) 
+    };
   } catch (error) {
-    console.log(error);
-    throw new Error("An error occurred while fetching chat stack.");
+    console.error(error);
+    throw new Error("An error occurred while fetching the chat stack.");
   }
 };
+
 
 // Find Conversation between two users
 exports.findConversation = async (userId1, userId2) => {
   try {
     const conversation = await Conversation.findOne({
-      participants: { $all: [userId1, userId2] }
+      participants: { $all: [userId1, userId2] },
     }).populate({
       path: "messages",
       populate: {
-        path: "senderid", // Populate senderid to get user details
-        select: "name", // Select only the fields you need from the User model
+        path: "senderid",
+        select: "username name",
       },
     });
-
+    
     if (!conversation) {
       return { success: true, conversation: [], message: "No Previous Chat Found." };
     }
@@ -81,20 +86,27 @@ exports.findConversation = async (userId1, userId2) => {
       const year = date.getFullYear();
       const month = String(date.getMonth() + 1).padStart(2, "0");
       const day = String(date.getDate()).padStart(2, "0");
-      return `${year}-${month}-${day}`;
+      const hours = String(date.getHours()).padStart(2, "0");
+      const minutes = String(date.getMinutes()).padStart(2, "0");
+      const seconds = String(date.getSeconds()).padStart(2, "0");
+      return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
     };
-
+    
     const formattedMessages = conversation.messages.map((message) => {
       return {
         id: message._id.toString(),
-        userId: message.senderid._id.toString(),
-        sender: message.senderid.name,
+        senderId: message.senderid._id.toString(),
+        senderUsername: message.senderid.username,
+        senderName: message.senderid.name,
         message: message.message,
         time: formatDate(message.createdAt),
       };
-    });
+    });    
 
-    return { success: true, conversation: formattedMessages };
+    return {
+      success: true,
+      data: {conversationId: conversation._id.toString(), messages: formattedMessages}
+    };
   } catch (error) {
     console.log(error);
     throw new Error("An error occurred while fetching conversation.");

@@ -14,9 +14,8 @@ const ChatSidebar = ({ onSelectChat, isDarkMode, allusers, LoggedInUserDate }) =
         // Dispatch the GetChatStack middleware action to fetch the chat stack
         dispatch(chatMiddleware.GetChatStack(LoggedInUserDate._id.toString()))
             .then((response) => {
-                if (response.success) {
-                    // If the response is successful, update the chatStack
-                    setRecentChatStack(response.data); // Adjust according to your response structure
+                if (response.success) {                    
+                    setRecentChatStack(response.data);
                 }
             })
             .catch((error) => {
