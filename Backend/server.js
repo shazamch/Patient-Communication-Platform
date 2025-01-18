@@ -16,8 +16,11 @@ const io = new Server(server, {
           "https://patient-communication-platform.vercel.app/",
           "https://patient-communication-platform.vercel.app",
           ],
-        methods: ['GET', 'POST'],
-        credentials: true,
+          optionsSuccessStatus: 200,
+          methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+          credentials: true,
+          exposedHeaders: 'Authorization',
+          allowedHeaders: '*',
     },
 })
 
