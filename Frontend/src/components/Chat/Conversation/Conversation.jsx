@@ -64,23 +64,25 @@ function Conversation({ isDarkMode, conversationToRender, setconversationToRende
         // Listen for incoming chat messages
         socket.on('chat message', (messageData) => {
             if (messageData.ReceiverId.toString() === LoggedUser._id.toString()) {
-                console.log("Message Recevied")
+                console.log("Message Recevied", messageData)
                 const sound = new Audio(notification);
                 sound.play();
-            }            
+            }
+
             // Reformat messageData
-            const formattdmessageData = {
-                id: messageData.message.id,
-                message: messageData.message.message,
-                senderName: messageData.message.senderName,
-                senderId: messageData.message.senderId,
-                time: formatDate(messageData.message.timestamp)
-            };
-            if (messageData.message.conversationId === conversationToRender.conversationId){
+            const formattedMessageData = {
+                id: messageData.messageData?.timestamp,
+                message: messageData.messageData?.message,
+                senderName:messageData.messageData?.senderName,
+                senderId:messageData.messageData?.senderId,
+                time:formatDate(messageData.messageData?.timestamp)
+            };            
+
+            if (messageData.messageData?.conversationId === conversationToRender.conversationId){
                 console.log("Message Added to CONVO")
                 setconversationToRender((prevConversation) => ({
                     ...prevConversation,
-                    messages: [...prevConversation.messages, formattdmessageData],
+                    messages: [...prevConversation.messages, formattedMessageData],
                 }));
             }
         });

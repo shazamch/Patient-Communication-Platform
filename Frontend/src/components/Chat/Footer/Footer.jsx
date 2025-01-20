@@ -21,7 +21,7 @@ function Footer({ isDarkMode, receiverData, LoggedUser, conversationId }) {
         receiverid: ReceiverId,
         timestamp: new Date().toISOString(),
       };
-      socket.emit('chat message', { ReceiverId, message: messageData });
+      socket.emit('chat message', { ReceiverId, messageData });
       // Dispatch action to send the message
       const response = await dispatch(messageMiddleware.sendMessage(ReceiverId, messageData));
 
