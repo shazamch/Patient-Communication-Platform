@@ -4,14 +4,13 @@ import Header from '../Header/Header';
 
 function Layout({ children }) {
   return (
-    <div className="flex bg-gray-100">
+    <div className="flex bg-myblue">
       <NavSidebar />
-      <div className="flex flex-col flex-grow p-2 gap-5 overflow-auto bg-myblue">
-        {/* <Header/> */}
-        <div className="flex-grow h-[calc(100vh-100px)] w-[calc(100vw-80px)] bg-white rounded-lg shadow-lg">
-          {children}
+      <div className="flex-grow h-[calc(100vh)] w-[calc(100vw-60px)] bg-myblue rounded-lg shadow-lg p-2">
+          <div className='bg-white rounded-3xl h-[calc(100vh-15px)] w-[calc(100vw-75px)]'>
+            {children}
+          </div>
         </div>
-      </div>
     </div>
   );
 } 

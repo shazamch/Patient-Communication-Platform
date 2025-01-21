@@ -23,7 +23,6 @@ export function ChannelsIcon({ isActive }) {
             <path d="M25 11.25H5" stroke={isActive ? "#111111" : "#FFFFFF"} strokeWidth="2" strokeLinejoin="round" />
             <path d="M5 18.75H25" stroke={isActive ? "#111111" : "#FFFFFF"} strokeWidth="2" strokeLinejoin="round" />
         </svg>
-
     )
 }
 export function MeetingsIcon({ isActive }) {
@@ -32,7 +31,26 @@ export function MeetingsIcon({ isActive }) {
             <path d="M15 20C17.7614 20 20 17.7614 20 15C20 12.2386 17.7614 10 15 10C12.2386 10 10 12.2386 10 15C10 17.7614 12.2386 20 15 20Z" stroke={isActive ? "#111111" : "#FFFFFF"} strokeWidth="2"/>
             <path d="M27.5 15C27.5 20.8925 27.5 23.8389 25.6694 25.6694C23.8389 27.5 20.8925 27.5 15 27.5C9.10744 27.5 6.16116 27.5 4.33059 25.6694C2.5 23.8389 2.5 20.8925 2.5 15C2.5 9.10744 2.5 6.16116 4.33059 4.33059C6.16116 2.5 9.10744 2.5 15 2.5C20.8925 2.5 23.8389 2.5 25.6694 4.33059C26.8866 5.54776 27.2945 7.25819 27.4311 10" stroke={isActive ? "#111111" : "#FFFFFF"} strokeWidth="2" strokeLinejoin="round"/>
         </svg>
+    )
+}
 
+export function AppointmentsIcon({ isActive }) {
+    return (
+        <svg width="24" height="24" viewBox="0 0 61 61" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M14.4326 0.952881V20.9529M46.4326 0.952881V20.9529M12.4326 30.9529H24.4326M48.4326 30.9529H36.4326M12.4326 42.9529H24.4326M36.4326 42.9529H48.4326M6.43262 10.9529H54.4326C56.6418 10.9529 58.4326 12.7438 58.4326 14.9529V54.9529C58.4326 57.1621 56.6418 58.9529 54.4326 58.9529H6.43262C4.22348 58.9529 2.43262 57.1621 2.43262 54.9529V14.9529C2.43262 12.7438 4.22348 10.9529 6.43262 10.9529Z" stroke={isActive ? "#111111" : "#FFFFFF"} strokeWidth="4"/>
+        </svg>
+    )
+}
+
+export function TasksIcon({ isActive }) {
+    return (
+        <svg width="24" height="24" viewBox="0 0 61 61" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M31.3574 23.1526H44.4824" stroke={isActive ? "#111111" : "#FFFFFF"} strokeWidth="3.75" strokeLinecap="round" strokeLinejoin="round"/>
+            <path d="M16.3828 23.1526L18.2578 25.0276L23.8828 19.4026" stroke={isActive ? "#111111" : "#FFFFFF"} strokeWidth="3.75" strokeLinecap="round" strokeLinejoin="round"/>
+            <path d="M31.3574 40.6526H44.4824" stroke={isActive ? "#111111" : "#FFFFFF"} strokeWidth="3.75" strokeLinecap="round" strokeLinejoin="round"/>
+            <path d="M16.3828 40.6526L18.2578 42.5276L23.8828 36.9026" stroke={isActive ? "#111111" : "#FFFFFF"} strokeWidth="3.75" strokeLinecap="round" strokeLinejoin="round"/>
+            <path d="M22.9326 55.9529H37.9326C50.4326 55.9529 55.4326 50.9529 55.4326 38.4529V23.4529C55.4326 10.9529 50.4326 5.95288 37.9326 5.95288H22.9326C10.4326 5.95288 5.43262 10.9529 5.43262 23.4529V38.4529C5.43262 50.9529 10.4326 55.9529 22.9326 55.9529Z" stroke={isActive ? "#111111" : "#FFFFFF"} strokeWidth="3.75" strokeLinecap="round" strokeLinejoin="round"/>
+        </svg>
     )
 }
 

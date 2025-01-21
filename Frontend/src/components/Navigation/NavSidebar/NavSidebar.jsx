@@ -37,9 +37,9 @@ function NavSidebar({ isDarkMode }) {
             </div>
 
             {/* Below menu */}
-            <nav className="px-5 flex-grow overflow-y-auto">
+            <nav className="px-5 flex-grow overflow-hidden">
                 <ul className="flex flex-col gap-2 justify-center mt-4">
-                    {NavSidebarItems().map(({ to, icon, label, hasSubmenu, subItems }) => (
+                    {NavSidebarItems().map(({ to, icon, label, hasSubmenu, subItems, textSize  }) => (
                         <li key={to} className="flex flex-col gap-1.5 items-center">
                             <NavLink
                                 to={to}
@@ -52,14 +52,14 @@ function NavSidebar({ isDarkMode }) {
                                 onClick={hasSubmenu ? toggleCustomersSection : undefined}
                             >
                                 {/* Icon and Label */}
-                                <div className="group flex flex-col items-center relative">
-                                    <span className="flex items-center justify-center text-xl">
-                                        {React.cloneElement(icon, { isActive: to === window.location.pathname })}
-                                    </span>
+                                <span className="flex items-center justify-center text-sm"> {/* Reduced text size */}
+                                    {React.cloneElement(icon, { isActive: to === window.location.pathname })}
+                                </span>
 
-                                    {/* Label shown only when expanded */}
-                                    <span className="text-xs text-center mt-1">{label}</span>
-                                </div>
+                                {/* Label shown only when expanded */}
+                                <span className={`${textSize} text-center mt-1 font-bold truncate`}>
+                                    {label}
+                                </span>
 
                                 {/* Submenu indicator */}
                                 {hasSubmenu && <ExpandableIcon isExpanded={isSubMenuExpanded} />}

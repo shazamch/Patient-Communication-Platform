@@ -1,75 +1,50 @@
-import React, { useState } from 'react';
-import JoinMeetingModal from '../../components/Meeting/JoinMeetingModel/JoinMeetingModel';
-import JoinMeeting from "../../assets/customIcons/meetingIcons/joinmeeting.svg";
-import CreateMeeting from "../../assets/customIcons/meetingIcons/createmeeting.svg";
-import ScheduleMeeting from "../../assets/customIcons/meetingIcons/schedulemeeting.svg";
-import MoreOptions from "../../assets/customIcons/meetingIcons/moreoptions.svg";
+// pages/Chat/Chat.jsx
+import React, { useState, useEffect } from 'react';
+import MeetingSidebar from '../../components/Meeting/MeetingSidebar/MeetingSidebar';
+import logo from '../../assets/MainLogo.svg';
+import { useDispatch, useSelector } from 'react-redux';
+import JoinMeetingModal from '../../components/Meeting/JoinMeetingModel/JoinMeetingModel'
 
-function Meetings() {
-  const [isJoinModalOpen, setIsJoinModalOpen] = useState(false);
+function Meeting({ children, onLogout, isDarkMode, toggleDarkMode }) {
+  const Data = localStorage.getItem("user");
+  const LoggedInUserDate = JSON.parse(Data);
+  const dispatch = useDispatch();
+  const [showSplash, setShowSplash] = useState(true)
 
-  const handleClick = (action) => {
-    switch (action) {
-      case 'create':
-        alert('Create Meeting functionality to be implemented.');
-        break;
-      case 'join':
-        setIsJoinModalOpen(true);
-        break;
-      case 'schedule':
-        alert('Schedule Meeting functionality to be implemented.');
-        break;
-      default:
-        break;
-    }
+  // Function to check which conversation belongs to the selected userId and set the selected conversation
+  const onSelectChat = (userId) => {
+    setShowSplash(false);
   };
 
   return (
-    <div className="flex items-center justify-center h-[calc(100vh-115px)] w-[calc(100vw-130px)] bg-white rounded-lg shadow-lg">
-      <div className="grid grid-cols-2 gap-8">
-        {/* Create Meeting Icon */}
-        <div
-          className="flex flex-col items-center justify-center w-40 h-40 bg-gray-100 rounded-lg text-black cursor-pointer hover:bg-gray-200"
-          onClick={() => handleClick('create')}
-        >
-          <img src={CreateMeeting} alt="Create Meeting" className="w-16 h-16" />
-          <span className="mt-2 text-lg">Create Meeting</span>
-        </div>
-
-        {/* Join Meeting Icon */}
-        <div
-          className="flex flex-col items-center justify-center w-40 h-40 bg-gray-100 rounded-lg text-black cursor-pointer hover:bg-gray-200"
-          onClick={() => handleClick('join')}
-        >
-          <img src={JoinMeeting} alt="Join Meeting" className="w-16 h-16" />
-          <span className="mt-2 text-lg">Join Meeting</span>
-        </div>
-
-        {/* Schedule Meeting Icon */}
-        <div
-          className="flex flex-col items-center justify-center w-40 h-40 bg-gray-100 rounded-lg text-black cursor-pointer hover:bg-gray-200"
-          onClick={() => handleClick('schedule')}
-        >
-          <img src={ScheduleMeeting} alt="Schedule Meeting" className="w-16 h-16" />
-          <span className="mt-2 text-lg">Schedule Meeting</span>
-        </div>
-
-        {/* Placeholder for additional functionality */}
-        <div
-          className="flex flex-col items-center justify-center w-40 h-40 bg-gray-100 rounded-lg text-black cursor-pointer hover:bg-gray-200"
-          onClick={() => alert('Additional feature to be implemented.')}
-        >
-          <img src={MoreOptions} alt="More Options" className="w-16 h-16" />
-          <span className="mt-2 text-lg">More Options</span>
-        </div>
-      </div>
-
-      <JoinMeetingModal
-        isOpen={isJoinModalOpen}
-        onClose={() => setIsJoinModalOpen(false)}
+    <div className="flex bg-mylightblue shadow-lg rounded-3xl p-2">
+      <MeetingSidebar onSelectChat={onSelectChat} isDarkMode={isDarkMode} />
+      <div className="flex-grow w-80 h-[calc(100vh-30px)]">
+        {showSplash !== true ? (
+          <>
+            <div className="flex">
+              <div className="flex">{children}</div>
+              <JoinMeetingModal
+        isOpen={() => setShowSplash(false)}
+        onClose={() => setShowSplash(true)}
       />
+
+            </div>
+          </>
+        ) : (
+          <div className={`flex flex-col justify-center items-center h-[calc(100vh-15px)] rounded-r-lg ${isDarkMode ? 'bg-transparent text-white' : 'bg-transparent text-black'}`}>
+            <img src={logo} alt="Main Logo" className={`h-24 w-24 mb-6 ${isDarkMode ? 'filter invert' : ''}`} />
+            <h1 className="text-5xl font-bold text-gray-800 mb-4 drop-shadow-lg">
+              Patient Communication Platform
+            </h1>
+            <p className={`text-2xl ${isDarkMode ? 'text-white' : 'text-gray-700'} drop-shadow-md tracking-wide`}>
+              Your Voice, Amplified
+            </p>
+            </div>
+        )}
+      </div>
     </div>
   );
 }
 
-export default Meetings;
+export default Meeting;

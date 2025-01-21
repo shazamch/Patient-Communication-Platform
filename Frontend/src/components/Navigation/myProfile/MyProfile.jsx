@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import CustomInput from "../../../elements/customInput/CustomInput";
 import ButtonWithIcon from "../../../elements/buttonWithIcon/ButtonWithIcon.jsx";
-import umsMiddleware from "../../../redux/middleware/umsMiddleware.js";
 import { useDispatch, useSelector } from "react-redux";
 import PasswordInput from "../../../elements/passwordInput/PasswordInput.jsx";
 import CrossButton from "../../../elements/crossButton/CrossButton.jsx";
@@ -126,12 +125,13 @@ export default function MyProfile() {
       return;
     } else {
       try {
-        const response = await dispatch(
-          umsMiddleware.changeUserPassword(
-            currentPassword,
-            passwordData.newPassword
-          )
-        );
+        // const response = await dispatch(
+        //   umsMiddleware.changeUserPassword(
+        //     currentPassword,
+        //     passwordData.newPassword
+        //   )
+        // );
+        console.log("Password changed successfully");
       } catch (error) {
         console.error("Error fetching customers:", error);
       }

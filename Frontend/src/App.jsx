@@ -12,6 +12,8 @@ import MyProfile from "./components/Navigation/myProfile/MyProfile";
 import Lobby from "./components/Meeting/Lobby/Lobby";
 import Toast from './elements/toast/Toast'
 import MyErrorBoundary, { NotFoundPage } from "./components/errorPage/ErrorBoundary"; 
+import Appointments from "./pages/Appointments/Appointments"
+import Tasks from "./pages/Tasks/Tasks"
 
 
 function App() {
@@ -46,6 +48,8 @@ function App() {
         <Route path="/chat" element={<PrivateRoute isLoggedIn={isAuthenticated}><Layout><Chat isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode}/></Layout></PrivateRoute>}/>
         <Route path="/meetings" element={<PrivateRoute isLoggedIn={isAuthenticated}><Layout><Meetings isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode}/></Layout></PrivateRoute>}/>
         <Route path="/lobby/:roomNumber" element={<PrivateRoute isLoggedIn={isAuthenticated}><Layout><Lobby isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode}/></Layout></PrivateRoute>} />
+        <Route path="/appointments" element={<PrivateRoute isLoggedIn={isAuthenticated}><Layout><Appointments isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode}/></Layout></PrivateRoute>}/>
+        <Route path="/tasks" element={<PrivateRoute isLoggedIn={isAuthenticated}><Layout><Tasks isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode}/></Layout></PrivateRoute>}/>
         
         <Route path="/myprofile" element={<PrivateRoute isLoggedIn={isAuthenticated}><Layout><MyProfile  isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode}/></Layout></PrivateRoute>}/>
         {/* <Route path="*" element={<Navigate to="/" />} /> */}

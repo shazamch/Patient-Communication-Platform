@@ -11,7 +11,7 @@ function Footer({ isDarkMode, receiverData, LoggedUser, conversationId }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (message.trim()) {
-      const ReceiverId = receiverData._id; // Replace with the actual user ID
+      const ReceiverId = receiverData._id;
 
       const messageData = {
         message: message,
@@ -42,18 +42,18 @@ function Footer({ isDarkMode, receiverData, LoggedUser, conversationId }) {
   }, []);
 
   return (
-    <footer className={`flex justify-between items-center p-4 rounded-xl ${isDarkMode ? 'bg-gray-800 text-white' : 'bg-white text-black'}`}>
+    <footer className={`flex justify-between items-center py-2 px-8 rounded-full shadow-[0px_4px_10px_rgba(0,0,0,0.1)] ${isDarkMode ? 'bg-white text-black' : 'bg-white text-black'}`}>
       <form onSubmit={handleSubmit} className="flex w-full">
         <input
           type="text"
           value={message}
           onChange={(e) => setMessage(e.target.value)}
-          className={`flex-grow p-2 rounded-l-lg focus:outline-none ${isDarkMode ? 'bg-gray-700 text-white' : 'bg-gray-200 text-black'}`}
+          className={`flex-grow p-2 rounded-l-lg focus:outline-none ${isDarkMode ? 'bg-white text-balck' : 'bg-gray-200 text-black'}`}
           placeholder="Type your message..."
         />
         <button
           type="submit"
-          className={`px-4 py-2 rounded-r-lg ml-1 bg-gradient-to-r from-yellow-400 via-red-500 to-pink-600 text-white`}
+          className={`px-4 py-2 rounded-full ml-1 bg-myblue text-white`}
         >
           Send
         </button>

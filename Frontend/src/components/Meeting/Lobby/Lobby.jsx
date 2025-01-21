@@ -1,9 +1,11 @@
 import React, { useEffect, useCallback, useState } from "react";
-import peer from "../../../redux/middleware/peer";
+import peer from "../../../config/peer";
 import { useSocket } from "../../../context/SocketProvider";
+import { useNavigate } from 'react-router-dom';
 
 const Lobby = () => {
   const socket = useSocket();
+  const navigate = useNavigate();  // Hook for navigation
   const [remoteSocketId, setRemoteSocketId] = useState(null);
   const [myStream, setMyStream] = useState();
   const [remoteStream, setRemoteStream] = useState();
@@ -109,6 +111,22 @@ const Lobby = () => {
     handleNegoNeedFinal,
   ]);
 
+  // New function to handle ending the call and navigating
+  const handleEndCall = () => {
+    // Stop all tracks of myStream
+    if (myStream) {
+      myStream.getTracks().forEach((track) => track.stop());
+    }
+
+    // Close peer connection
+    if (peer.peer) {
+      peer.peer.close();
+    }
+
+    // Navigate to /Meetings
+    navigate("/meetings");
+  };
+
   console.log("myStream", myStream);
   console.log("remoteStream", remoteStream);
 
@@ -118,6 +136,14 @@ const Lobby = () => {
       <h4>{remoteSocketId ? "Connected" : "No one in room"}</h4>
       {myStream && <button onClick={sendStreams}>Send Stream</button>}
       {remoteSocketId && <button onClick={handleCallUser}>CALL</button>}
+      
+      {/* End Call Button */}
+      {myStream && (
+        <button onClick={handleEndCall}>
+          End Call and Go to Meetings
+        </button>
+      )}
+
       <div className="flex">
         {myStream && (
           <div>

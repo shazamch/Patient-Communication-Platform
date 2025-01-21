@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import chatMiddleware from '../../../redux/middleware/chatMiddleware';
 import CrossButton from "../../../elements/crossButton/CrossButton";
 
-const ChatSidebar = ({ onSelectChat, isDarkMode, allusers, LoggedInUserDate }) => {
+const ChatSidebar = ({ onSelectChat, isDarkMode, allusers, LoggedInUserData }) => {
     const dispatch = useDispatch();
     const chatStack = useSelector((state) => state.chatStack); // Retrieve chat stack from Redux store
     const [searchTerm, setSearchTerm] = useState('');
@@ -12,7 +12,7 @@ const ChatSidebar = ({ onSelectChat, isDarkMode, allusers, LoggedInUserDate }) =
 
     useEffect(() => {
         // Dispatch the GetChatStack middleware action to fetch the chat stack
-        dispatch(chatMiddleware.GetChatStack(LoggedInUserDate._id.toString()))
+        dispatch(chatMiddleware.GetChatStack(LoggedInUserData._id.toString()))
             .then((response) => {
                 if (response.success) {                    
                     setRecentChatStack(response.data);
@@ -64,14 +64,14 @@ const ChatSidebar = ({ onSelectChat, isDarkMode, allusers, LoggedInUserDate }) =
     );
 
     return (
-        <div className={`p-2 flex flex-col h-[calc(100vh-115px)] border-r border-gray-150 rounded-l-lg ${isDarkMode ? 'bg-gray-800 text-white' : 'bg-white text-black'}`}>
+        <div className={`py-8 px-3 flex flex-col w-80 h-[calc(100vh-30px)] border-r border-gray-150 rounded-3xl shadow-[0px_4px_10px_rgba(0,0,0,0.1)] ${isDarkMode ? 'bg-gray-800 text-white' : 'bg-white text-black'}`}>
             {/* Search Bar */}
             <input
                 type="text"
-                placeholder="Search"
+                placeholder="Search by name"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className={`px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-400 ${isDarkMode ? 'bg-gray-700 text-white border-gray-600' : 'bg-white border-gray-300 text-black'}`}
+                className={`px-4 py-2 border rounded-full ${isDarkMode ? 'bg-gray-700 text-white border-gray-600' : 'bg-white border-gray-300 text-black'}`}
             />
 
             {/* Title: Recent Chats or Start New Chat */}

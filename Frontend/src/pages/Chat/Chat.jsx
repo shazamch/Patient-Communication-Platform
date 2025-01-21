@@ -9,7 +9,7 @@ import userMiddleware from '../../redux/middleware/userMiddleware';
 
 function Chat({ children, onLogout, isDarkMode, toggleDarkMode }) {
   const Data = localStorage.getItem("user");
-  const LoggedInUserDate = JSON.parse(Data);
+  const LoggedInUserData = JSON.parse(Data);
   const dispatch = useDispatch();
   const [conversationToRender, setconversationToRender] = useState("Splash");
   const [SelectFromStack, setSelectedFromStack] = useState([]);
@@ -49,7 +49,7 @@ function Chat({ children, onLogout, isDarkMode, toggleDarkMode }) {
 
   // Function to check which conversation belongs to the selected userId and set the selected conversation
   const onSelectChat = (userId) => {
-    fetchConversation(LoggedInUserDate._id,userId);
+    fetchConversation(LoggedInUserData._id,userId);
     const selectedUserData = allusers.find(chat => chat._id === userId);
     setSelectedFromStack(selectedUserData);
   };
@@ -68,18 +68,18 @@ function Chat({ children, onLogout, isDarkMode, toggleDarkMode }) {
   }, []);
 
   return (
-    <div className="flex bg-white shadow-lg rounded-lg">
-      <Sidebar onSelectChat={onSelectChat} isDarkMode={isDarkMode} allusers={allusers} LoggedInUserDate={LoggedInUserDate} />
-      <div className="flex-grow w-full h-[calc(100vh-15px)]">
+    <div className="flex bg-mylightblue shadow-lg rounded-3xl p-2">
+      <Sidebar onSelectChat={onSelectChat} isDarkMode={isDarkMode} allusers={allusers} LoggedInUserData={LoggedInUserData} />
+      <div className="flex-grow w-80 h-[calc(100vh-30px)]">
         {conversationToRender !== "Splash" ? (
           <>
             <div className="flex">
               <div className="flex">{children}</div>
-              <Conversation isDarkMode={isDarkMode} conversationToRender={conversationToRender} setconversationToRender={setconversationToRender} LoggedUser={LoggedInUserDate} otherUserData={SelectFromStack} />
+              <Conversation isDarkMode={isDarkMode} conversationToRender={conversationToRender} setconversationToRender={setconversationToRender} LoggedUser={LoggedInUserData} otherUserData={SelectFromStack} />
             </div>
           </>
         ) : (
-          <div className={`flex flex-col justify-center items-center h-[calc(100vh-15px)] rounded-r-lg ${isDarkMode ? 'bg-gray-800 text-white' : 'bg-white text-black'}`}>
+          <div className={`flex flex-col justify-center items-center h-[calc(100vh-25px)] rounded-r-lg ${isDarkMode ? 'bg-transparent text-white' : 'bg-transparent text-black'}`}>
             <img src={logo} alt="Main Logo" className={`h-24 w-24 mb-6 ${isDarkMode ? 'filter invert' : ''}`} />
             <h1 className="text-5xl font-bold text-gray-800 mb-4 drop-shadow-lg">
               Patient Communication Platform

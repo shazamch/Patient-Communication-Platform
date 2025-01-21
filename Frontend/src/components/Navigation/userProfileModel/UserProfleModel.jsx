@@ -35,7 +35,7 @@ function UserProfileModel({ isModelOpen, toggleModel, onLogout, onProfile }) {
             </button>
 
             {isModelOpen && (
-                <div className="absolute right-0 z-10 mt-2 w-60 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
+                <div className="absolute left-0 z-10 mb-2 w-40 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 bottom-full">
                     <div className="py-2" role="menu" aria-orientation="vertical">
                         <div className="flex items-center px-2 gap-2">
                             <img

@@ -6,8 +6,9 @@ import Table from "../../elements/table/Table";
 import statusStyles from "../../util/statusStyles/StatusStyles";
 import CustomDropdown from "../../elements/customDropdown/CustomDropdown"
 import EyeIcon from '../../assets/genearlIcons/EyeIcon.svg';
+import ButtonWithIcon from '../../elements/buttonWithIcon/ButtonWithIcon';
 
-function Dashboard() {
+function Tasks() {
   const dispatch = useDispatch();
   const socket = useSocket();
 
@@ -129,61 +130,20 @@ function Dashboard() {
 
   return (
     <div className="p-4">
-      <h1 className="text-2xl font-bold mb-4">Dashboard</h1>
-
       {/* Notification Area */}
       {notification && (
         <div className="mb-4 p-3 bg-blue-100 text-blue-800 rounded-md shadow-md">
           {notification}
         </div>
       )}
-          <Table
-          tableTitle="Appointmenst"
-          tableSubTitle="Your upcoming appointments"
-          columns={TaskColumns}
-          rows={displayedData}
-          // secondlastColumnName="Status"
-          // lastColumnName="Details"
-          searchBarData={allTasks}
-          searchBarSetData={setFilteredData}
-          searchBarKey="Name"
-          searchBarclassName="h-8 bg-gray-100 border border-gray-100 rounded-md px-2"
-          sortDropdownData={allTasks}
-          sortDropdownSetData={setFilteredData}
-          sortDropdownOptions={sortOptions}
-          currentPage={currentPage}
-          totalPages={totalPages}
-          onPageChange={setCurrentPage}
-          itemsPerPage={itemsPerPage}
-          totalItems={filteredData?.length}
-          tableHeight="max-h-[calc(100vh-555px)]"
-          isLoading={isLoading}
-        >
-          {(task) => (
-            <tr key={task._id}> {/* Ensure each row has a unique key */}
-              <td className="py-6 px-4 flex items-center">
-                {/* <CustomDropdown
-                  id="status"
-                  name="status"
-                  className={statusStyles[task.Status]}
-                  value={task.status}
-                  onChange={(e) => handleInputChange(e, task)}
-                  placeholder="Select Status"
-                  options={[
-                    { value: "Pending", label: "Pending" },
-                    { value: "In Progress", label: "In Progress" },
-                  ]}
-                /> */}
-              </td>
-              {/* <td className="py-3 px-5">
-                <button onClick={() => handleDetailsClick(task)}>
-                  <img src={EyeIcon} alt="View" width={18} height={18} />
-                </button>
-              </td> */}
-            </tr>
-          )}
-        </Table>
-          <div className="py-2"></div>
+      <div className="flex gap-3 justify-end items-center mb-4">
+      <ButtonWithIcon
+            // onClick={handlePlaceOrderClicking}
+            // icon={<img src={PlaceOrderIcon} alt="import file" width={18} height={18} />}
+            text="Create Task"
+            className="bg-myblue text-white px-3 py-2 rounded-full"
+          />
+          </div>
           <Table
           tableTitle="Tasks"
           tableSubTitle="Assigened to you"
@@ -203,7 +163,7 @@ function Dashboard() {
           onPageChange={setCurrentPage}
           itemsPerPage={itemsPerPage}
           totalItems={filteredData?.length}
-          tableHeight="max-h-[calc(100vh-555px)]"
+          tableHeight="h-[calc(100vh-260px)]"
           isLoading={isLoading}
         >
           {(task) => (
@@ -234,4 +194,4 @@ function Dashboard() {
   );
 }
 
-export default Dashboard;
+export default Tasks;

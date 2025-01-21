@@ -1,11 +1,22 @@
 import React from 'react';
-import { DashBoardIcon, ChatIcon, ChannelsIcon, MeetingsIcon } from '../../../assets/sidebarIcons/SidebarIcons';
+import { DashBoardIcon, ChatIcon, ChannelsIcon, MeetingsIcon, AppointmentsIcon, TasksIcon } from '../../../assets/sidebarIcons/SidebarIcons';
 
 const allSidebarItems = [
-  { to: "/dashboard", icon: <DashBoardIcon/>, label: "Dashboard", permission: "Dashboard" },
-  { to: "/chat", icon: <ChatIcon/>, label: "Chat", permission: "Chat" },
-  // { to: "/meetings", icon: <ChannelsIcon/>, label: "Channels", permission: "Channels" },
-  { to: "/meetings", icon: <MeetingsIcon/>, label: "Meetings", permission: "Meetings" },
+  { to: "/dashboard", icon: <DashBoardIcon/>, label: "Dashboard", permission: "Dashboard", textSize: "text-[10px]" },
+  { to: "/chat", icon: <ChatIcon/>, label: "Chat", permission: "Chat", textSize: "text-xs" },
+  { to: "/meetings", icon: <MeetingsIcon/>, label: "Meetings", permission: "Meetings", textSize: "text-xs" },
+  { to: "/tasks", icon: <TasksIcon/>, label: "Tasks", permission: "Tasks", textSize: "text-xs" },
+  { to: "/appointments", icon: <AppointmentsIcon/>, label: "Appointments", permission: "Appointments", textSize: "text-[8px]" },
+];
+
+
+// const allSidebarItems = [
+//   { to: "/dashboard", icon: <DashBoardIcon/>, label: "Dashboard", permission: "Dashboard" },
+//   { to: "/chat", icon: <ChatIcon/>, label: "Chat", permission: "Chat" },
+//   { to: "/meetings", icon: <ChannelsIcon/>, label: "Channels", permission: "Channels" },
+//   { to: "/meetings", icon: <MeetingsIcon/>, label: "Meetings", permission: "Meetings" },
+//   { to: "/appointemnts", icon: <AppointmentsIcon/>, label: "Appointments", permission: "Appointments" },
+//   { to: "/tasks", icon: <TasksIcon/>, label: "Tasks", permission: "Tasks" },
 //   {
 //     to: "/customers",
 //     icon: <CustomersIcon />,
@@ -24,7 +35,7 @@ const allSidebarItems = [
 //   { to: "/reviews", icon: <ReviewsIcon/>, label: "Reviews", permission: "Reviews" },
 //   { to: "/ums", icon: <UmsIcon/>, label: "UMS", permission: "UMS" },
 //   { to: "/pers", icon: <PersIcon/>, label: "PERS", permission: "PERS" },
-];
+// ];
 
 
 // Filter sidebar items based on permissions

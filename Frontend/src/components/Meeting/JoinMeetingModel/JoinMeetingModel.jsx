@@ -6,7 +6,7 @@ function JoinMeetingModal({ isOpen, onClose }) {
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
     const [roomNumber, setRoomNumber] = useState('');
-    const socket = useSocket();  // Make sure this is always returning a valid socket object
+    const socket = useSocket();
 
     const handleSubmit = (e) => {
         if (!email || !roomNumber) {
