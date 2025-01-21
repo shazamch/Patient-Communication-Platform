@@ -32,6 +32,7 @@ const userRoutes = require('./src/routes/userRoutes.js');
 const messageRoutes = require('./src/routes/messageRoutes.js');
 const conversationRoutes = require('./src/routes/conversationRoutes.js');
 const taskRoutes = require('./src/routes/taskRoutes.js');
+const appointmentRoutes = require('./src/routes/appointmentRoutes.js');
 
 app.use('/protected', authenticateToken);
 
@@ -40,6 +41,7 @@ app.use('/protected/users', userRoutes);
 app.use('/protected/message', messageRoutes);
 app.use('/protected/conversation', conversationRoutes);
 app.use('/protected/task', taskRoutes);
+app.use('/protected/appointment', appointmentRoutes);
 
 
 const port = process.env.PORT || 3000;
@@ -58,6 +60,10 @@ io.on('connection', (socket) => {
 
     socket.on('taskData', (data) => {
       io.emit('taskData', data);
+    });
+
+    socket.on('appointmentData', (data) => {
+      io.emit('appointmentData', data);
     });
 
     socket.on("room:join", (data) => {

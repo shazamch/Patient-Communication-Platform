@@ -11,8 +11,8 @@ const TaskModal = ({ isOpen, onClose, referenceMessage }) => {
 
   const [taskData, setTaskData] = useState({
     taskDescription: "",
-    assignedToID: currentUser._id,
-    assignedToName: currentUser.name,
+    assignedToID: currentUser._id || "",
+    assignedToName: currentUser.name || "",
     status: "Pending",
     priority: "Medium",
     dueDate: "",
@@ -70,8 +70,8 @@ const TaskModal = ({ isOpen, onClose, referenceMessage }) => {
 
   const handleSubmit = async () => {
     const taskDataToSubmit = {
-      messageId: referenceMessage.id,
-      message: referenceMessage.message,
+      messageId: referenceMessage?.id || null,
+      message: referenceMessage?.message || null,
       taskDescription: taskData.taskDescription,
       assignedToID: taskData.assignedToID,
       assignedToName: taskData.assignedToName,
@@ -195,7 +195,7 @@ const TaskModal = ({ isOpen, onClose, referenceMessage }) => {
           </button>
           <button
             type="button"
-            className="px-6 py-2 bg-blue-600 text-white rounded-lg text-sm font-medium transition-all duration-200 hover:bg-blue-700"
+            className="px-6 py-2 bg-myblue text-white rounded-lg text-sm font-medium transition-all duration-200 hover:bg-blue-700"
             onClick={handleSubmit}
           >
             Create Task

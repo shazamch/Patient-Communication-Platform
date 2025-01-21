@@ -7,8 +7,9 @@ import statusStyles from "../../util/statusStyles/StatusStyles";
 import CustomDropdown from "../../elements/customDropdown/CustomDropdown"
 import EyeIcon from '../../assets/genearlIcons/EyeIcon.svg';
 import ButtonWithIcon from '../../elements/buttonWithIcon/ButtonWithIcon';
+import TaskModal from "../../components/Task/TaskModel";
 
-function Tasks() {
+function Tasks({tableHeight}) {
   const dispatch = useDispatch();
   const socket = useSocket();
 
@@ -32,6 +33,9 @@ function Tasks() {
         (currentPage - 1) * itemsPerPage,
         currentPage * itemsPerPage
     );
+
+    const handleCreateTaskClick = () => setisModalOpen(true);
+    const closeModal = () => setisModalOpen(false);
 
   useEffect(() => {
     const fetchAllTasks = async () => {
@@ -124,9 +128,13 @@ function Tasks() {
   const subtitle = "Assigened to you";
 
   const sortOptions = [
-    { value: 'oldest', label: 'Sort by: Oldest' },
     { value: 'newest', label: 'Sort by: Newest' },
+    { value: 'oldest', label: 'Sort by: Oldest' },
   ];
+
+  if (!tableHeight) {
+    tableHeight = "h-[calc(100vh-250px)]"
+  }
 
   return (
     <div className="p-4">
@@ -138,58 +146,61 @@ function Tasks() {
       )}
       <div className="flex gap-3 justify-end items-center mb-4">
       <ButtonWithIcon
-            // onClick={handlePlaceOrderClicking}
+            onClick={handleCreateTaskClick}
             // icon={<img src={PlaceOrderIcon} alt="import file" width={18} height={18} />}
             text="Create Task"
             className="bg-myblue text-white px-3 py-2 rounded-full"
           />
           </div>
-          <Table
-          tableTitle="Tasks"
-          tableSubTitle="Assigened to you"
-          columns={TaskColumns}
-          rows={displayedData}
-          // secondlastColumnName="Status"
-          // lastColumnName="Details"
-          searchBarData={allTasks}
-          searchBarSetData={setFilteredData}
-          searchBarKey="Name"
-          searchBarclassName="h-8 bg-gray-100 border border-gray-100 rounded-md px-2"
-          sortDropdownData={allTasks}
-          sortDropdownSetData={setFilteredData}
-          sortDropdownOptions={sortOptions}
-          currentPage={currentPage}
-          totalPages={totalPages}
-          onPageChange={setCurrentPage}
-          itemsPerPage={itemsPerPage}
-          totalItems={filteredData?.length}
-          tableHeight="h-[calc(100vh-260px)]"
-          isLoading={isLoading}
-        >
-          {(task) => (
-            <tr key={task._id}> {/* Ensure each row has a unique key */}
-              <td className="py-6 px-4 flex items-center">
-                {/* <CustomDropdown
-                  id="status"
-                  name="status"
-                  className={statusStyles[task.Status]}
-                  value={task.status}
-                  onChange={(e) => handleInputChange(e, task)}
-                  placeholder="Select Status"
-                  options={[
-                    { value: "Pending", label: "Pending" },
-                    { value: "In Progress", label: "In Progress" },
-                  ]}
-                /> */}
-              </td>
-              {/* <td className="py-3 px-5">
-                <button onClick={() => handleDetailsClick(task)}>
-                  <img src={EyeIcon} alt="View" width={18} height={18} />
-                </button>
-              </td> */}
-            </tr>
+            <Table
+              tableTitle="Tasks"
+              tableSubTitle="Assigened to you"
+              columns={TaskColumns}
+              rows={displayedData}
+              // secondlastColumnName="Status"
+              // lastColumnName="Details"
+              searchBarData={allTasks}
+              searchBarSetData={setFilteredData}
+              searchBarKey="Name"
+              searchBarclassName="h-8 bg-gray-100 border border-gray-100 rounded-md px-2"
+              sortDropdownData={allTasks}
+              sortDropdownSetData={setFilteredData}
+              sortDropdownOptions={sortOptions}
+              currentPage={currentPage}
+              totalPages={totalPages}
+              onPageChange={setCurrentPage}
+              itemsPerPage={itemsPerPage}
+              totalItems={filteredData?.length}
+              tableHeight={tableHeight}
+              isLoading={isLoading}
+            >
+              {(task) => (
+                <tr key={task._id}> {/* Ensure each row has a unique key */}
+                  <td className="py-6 px-4 flex items-center">
+                    {/* <CustomDropdown
+                      id="status"
+                      name="status"
+                      className={statusStyles[task.Status]}
+                      value={task.status}
+                      onChange={(e) => handleInputChange(e, task)}
+                      placeholder="Select Status"
+                      options={[
+                        { value: "Pending", label: "Pending" },
+                        { value: "In Progress", label: "In Progress" },
+                      ]}
+                    /> */}
+                  </td>
+                  {/* <td className="py-3 px-5">
+                    <button onClick={() => handleDetailsClick(task)}>
+                      <img src={EyeIcon} alt="View" width={18} height={18} />
+                    </button>
+                  </td> */}
+                </tr>
+              )}
+          </Table>
+          {isModalOpen && (
+            <TaskModal isOpen={isModalOpen} onClose={closeModal} />
           )}
-        </Table>
       </div>
   );
 }
