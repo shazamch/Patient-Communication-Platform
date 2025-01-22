@@ -32,7 +32,7 @@ function Meeting({ children, onLogout, isDarkMode, toggleDarkMode }) {
             </div>
           </>
         ) : (
-          <div className={`flex flex-col justify-center items-center h-[calc(100vh-15px)] rounded-r-lg ${isDarkMode ? 'bg-transparent text-white' : 'bg-transparent text-black'}`}>
+          <div className={`flex flex-col justify-center items-center h-[calc(100vh-25px)] rounded-r-lg ${isDarkMode ? 'bg-transparent text-white' : 'bg-transparent text-black'}`}>
             <img src={logo} alt="Main Logo" className={`h-24 w-24 mb-6 ${isDarkMode ? 'filter invert' : ''}`} />
             <h1 className="text-5xl font-bold text-gray-800 mb-4 drop-shadow-lg">
               Patient Communication Platform

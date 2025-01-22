@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import MainLogo from '../../../assets/MainLogo.svg';
 import NavSidebarItems from './NavSidebarItems';
 import { ExpandableIcon } from '../../../assets/sidebarIcons/SidebarIcons';
@@ -8,8 +9,11 @@ import { logout } from "../../../redux/actions/userAction";
 import UserProfileModel from '../userProfileModel/UserProfleModel'; // Import the UserProfileModel component
 
 function NavSidebar({ isDarkMode }) {
+
+    const navigate = useNavigate();
+
     const [isSubMenuExpanded, setIsSubMenuExpanded] = useState(false);
-    const [isModelOpen, setisModelOpen] = useState(false); // State for controlling the profile modal visibility
+    const [isModelOpen, setisModelOpen] = useState(false); 
     const dispatch = useDispatch();
     const { user } = useSelector((state) => state.user); // Get user data from Redux
 
@@ -19,21 +23,20 @@ function NavSidebar({ isDarkMode }) {
 
     const handleLogout = () => {
         dispatch(logout());
-        setisModelOpen(false); // Close modal after logout
+        setisModelOpen(false);
     };
 
     const handleMyProfile = () => {
-        setisModelOpen(false); // Close modal and navigate to the profile page
-        // You can use the navigate function to go to the profile page
-        // navigate('/myprofile');
+        setisModelOpen(false);
+        navigate('/myprofile');
     };
 
     return (
         <div className="flex flex-col justify-between bg-myblue gap-2 h-screen transition-all duration-500 ease-in-out max-w-14 flex-shrink-0">
             {/* Logo */}
-            <div className="flex flex-col items-center justify-center">
+            <div className="flex flex-col items-center justify-center mt-5">
                 <img src={MainLogo} alt="YANA Logo" height="10px" className="h-10 invert" />
-                <span className="text-xs mt-2 text-center font-bold text-white">Patient Communication Platform</span>
+                <span className="text-sm mt-2 text-center font-bold text-white">PCP</span>
             </div>
 
             {/* Below menu */}
