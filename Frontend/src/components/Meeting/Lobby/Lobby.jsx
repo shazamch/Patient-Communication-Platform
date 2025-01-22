@@ -131,50 +131,73 @@ const Lobby = () => {
   console.log("remoteStream", remoteStream);
 
   return (
-    <div>
-      <h1>Room Page</h1>
-      <h4>{remoteSocketId ? "Connected" : "No one in room"}</h4>
-      {myStream && <button onClick={sendStreams}>Send Stream</button>}
-      {remoteSocketId && <button onClick={handleCallUser}>CALL</button>}
-      
-      {/* End Call Button */}
-      {myStream && (
-        <button onClick={handleEndCall}>
-          End Call and Go to Meetings
-        </button>
-      )}
+    <div className="min-h-screen bg-gray-100 flex flex-col items-center py-10">
+      {/* Header Section */}
+      <h1 className="text-3xl font-bold text-gray-800 mb-5">Room Page</h1>
+      <h4 className={`text-lg ${remoteSocketId ? "text-green-600" : "text-red-600"} mb-5`}>
+        {remoteSocketId ? "Connected" : "No one in room"}
+      </h4>
 
-      <div className="flex">
+      {/* Button Section */}
+      <div className="space-x-4 mb-8">
         {myStream && (
-          <div>
-            <h1>My Stream</h1>
+          <button
+            onClick={sendStreams}
+            className="px-6 py-2 bg-blue-500 text-white rounded-lg shadow-md hover:bg-blue-600 transition"
+          >
+            Send Stream
+          </button>
+        )}
+        {remoteSocketId && (
+          <button
+            onClick={handleCallUser}
+            className="px-6 py-2 bg-green-500 text-white rounded-lg shadow-md hover:bg-green-600 transition"
+          >
+            Call
+          </button>
+        )}
+        {myStream && (
+          <button
+            onClick={handleEndCall}
+            className="px-6 py-2 bg-red-500 text-white rounded-lg shadow-md hover:bg-red-600 transition"
+          >
+            End Call and Go to Meetings
+          </button>
+        )}
+      </div>
+
+      {/* Video Streams Section */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {myStream && (
+          <div className="bg-white shadow-md rounded-lg p-4 flex flex-col items-center">
+            <h2 className="text-xl font-semibold text-gray-700 mb-4">My Stream</h2>
             <video
               playsInline
               muted
               autoPlay
-              height="200px"
-              width="300px"
+              className="rounded-lg border border-gray-300 shadow-md"
               ref={(video) => {
                 if (video) {
                   video.srcObject = myStream;
                 }
               }}
+              style={{ width: "100%", maxHeight: "300px" }}
             />
           </div>
         )}
         {remoteStream && (
-          <div>
-            <h1>Remote Stream</h1>
+          <div className="bg-white shadow-md rounded-lg p-4 flex flex-col items-center">
+            <h2 className="text-xl font-semibold text-gray-700 mb-4">Remote Stream</h2>
             <video
               playsInline
               autoPlay
-              height="200px"
-              width="300px"
+              className="rounded-lg border border-gray-300 shadow-md"
               ref={(video) => {
                 if (video) {
                   video.srcObject = remoteStream;
                 }
               }}
+              style={{ width: "100%", maxHeight: "300px" }}
             />
           </div>
         )}
