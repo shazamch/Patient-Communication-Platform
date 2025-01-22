@@ -10,6 +10,7 @@ const AppointmentModal = ({ isOpen, onClose }) => {
   const currentUser = JSON.parse(localStorage.getItem("user"));
 
   const [appointmentData, setAppointmentData] = useState({
+    title: "",
     description: "",
     doctorID: "",
     doctorName: "",
@@ -105,6 +106,7 @@ const AppointmentModal = ({ isOpen, onClose }) => {
       patientID: appointmentData.patientID,
       patientName: appointmentData.patientName,
       description: appointmentData.description,
+      title: appointmentData.title,
       appointmentDate: appointmentData.appointmentDate,
       appointmentTime: appointmentData.appointmentTime,
       status: appointmentData.status,
@@ -115,7 +117,8 @@ const AppointmentModal = ({ isOpen, onClose }) => {
     try {
       const response = await dispatch(appointmentMiddleware.createAppointment(appointmentDataToSubmit));
       if (response.success) {
-        appointmentDataToSubmit._id = new Date().getTime(); // Temporary ID
+        appointmentDataToSubmit._id = new Date().getTime();
+        appointmentDataToSubmit.updatedAt = new Date().getTime();
         socket.emit('appointmentData', appointmentDataToSubmit);
       } else {
         console.error("Failed to submit appointment.");
@@ -134,6 +137,16 @@ const AppointmentModal = ({ isOpen, onClose }) => {
         <h2 className="text-2xl font-semibold text-gray-800 mb-6">Create Appointment</h2>
 
         <form>
+        <div className="mb-6">
+            <label className="block text-sm font-medium text-gray-700">Title</label>
+            <input
+              className="mt-2 p-3 border border-gray-300 rounded-lg w-full transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent"
+              rows="4"
+              value={appointmentData.title}
+              onChange={(e) => setAppointmentData({ ...appointmentData, title: e.target.value })}
+              placeholder="Enter appointment title"
+            ></input>
+          </div>
           <div className="mb-6">
             <label className="block text-sm font-medium text-gray-700">Description</label>
             <textarea
